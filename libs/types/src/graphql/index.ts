@@ -9,16 +9,22 @@
 /* eslint-disable */
 
 export interface CreateUserInput {
-    exampleField: number;
+    name: string;
+    email: string;
+    password: string;
 }
 
 export interface UpdateUserInput {
-    exampleField?: Nullable<number>;
+    name?: Nullable<string>;
+    email?: Nullable<string>;
+    password?: Nullable<string>;
     id: number;
 }
 
 export interface User {
-    exampleField: number;
+    id: string;
+    created_at: DateTime;
+    updated_at: DateTime;
 }
 
 export interface IQuery {
@@ -32,4 +38,5 @@ export interface IMutation {
     removeUser(id: number): User | Promise<User>;
 }
 
+export type DateTime = any;
 type Nullable<T> = T | null;
