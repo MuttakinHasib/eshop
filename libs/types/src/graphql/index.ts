@@ -15,13 +15,13 @@ export interface CreateUserInput {
 }
 
 export interface UpdateUserInput {
-    name?: Nullable<string>;
-    email?: Nullable<string>;
-    password?: Nullable<string>;
     id: number;
 }
 
 export interface User {
+    name: string;
+    email: string;
+    password: string;
     id: string;
     created_at: DateTime;
     updated_at: DateTime;
@@ -33,7 +33,7 @@ export interface IQuery {
 }
 
 export interface IMutation {
-    createUser(createUserInput: CreateUserInput): User | Promise<User>;
+    createUser(createUserInput: CreateUserInput): string | Promise<string>;
     updateUser(updateUserInput: UpdateUserInput): User | Promise<User>;
     removeUser(id: number): User | Promise<User>;
 }
