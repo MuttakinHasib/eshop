@@ -18,6 +18,7 @@
     "class-validator": "^0.14.0",
     "graphql": "^16.6.0",
     "helmet": "^6.1.5",
+    "joi": "^17.9.2",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "pg": "^8.10.0",
