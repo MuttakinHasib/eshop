@@ -24,7 +24,7 @@ import { UsersModule } from './modules/users/users.module';
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'apps/api/src/graphql/schema.gql'),
       definitions: {
-        path: join(process.cwd(), 'apps/api/src/graphql/index.ts'),
+        path: join(process.cwd(), 'libs/types/src/graphql/index.ts'),
       },
     }),
     UsersModule,
