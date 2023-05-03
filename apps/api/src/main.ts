@@ -9,7 +9,7 @@ async function bootstrap() {
   const port = process.env.PORT || 3000;
   await app.listen(port);
 
-  Logger.log(`🚀 Application is running on: ${app.getUrl}/graphql`);
+  Logger.log(`🚀 Application is running on: ${await app.getUrl()}/graphql`);
 }
 
 bootstrap();
