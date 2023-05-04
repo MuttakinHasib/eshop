@@ -19,9 +19,36 @@ type Mutation {
   updateUser(updateUserInput: UpdateUserInput!): User!
 }
 
+type Profile {
+  avatar: String!
+  bio: String
+  contact: String
+  created_at: DateTime!
+  id: ID!
+  socials: [Social!]
+  updated_at: DateTime!
+}
+
+input ProfileInputType {
+  avatar: String!
+  bio: String
+  contact: String
+  socials: [SocialInputType!]
+}
+
 type Query {
   user(id: Int!): User!
   users: [User!]!
+}
+
+type Social {
+  link: String!
+  type: String!
+}
+
+input SocialInputType {
+  link: String!
+  type: String!
 }
 
 input UpdateUserInput {
@@ -30,6 +57,7 @@ input UpdateUserInput {
   id: ID
   name: String
   password: String
+  profile: ProfileInputType
   updated_at: DateTime
 }
 
@@ -39,5 +67,6 @@ type User {
   id: ID!
   name: String!
   password: String!
+  profile: Profile
   updated_at: DateTime!
 }

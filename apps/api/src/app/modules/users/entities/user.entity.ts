@@ -8,6 +8,7 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
+import { Profile } from './profile.entity';
 
 @Entity()
 @ObjectType()
@@ -32,4 +33,8 @@ export class User extends CoreEntity {
   @IsString()
   @IsNotEmpty()
   password: string;
+
+  @Column({ type: 'simple-json', nullable: true })
+  @Field(() => Profile, { nullable: true, name: 'profile' })
+  profile?: Profile;
 }
