@@ -1,24 +1,35 @@
-import { ObjectType, Field, ID, GraphQLISODateTime } from '@nestjs/graphql';
+import { ObjectType, Field } from '@nestjs/graphql';
+import { Column, Entity } from 'typeorm';
+import { CoreEntity } from '@eshop/common';
 import {
-  CreateDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
-import { CreateUserInput } from '../dto/create-user.input';
+  IsEmail,
+  IsNotEmpty,
+  IsString,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 
 @Entity()
 @ObjectType()
-export class User extends CreateUserInput {
-  @PrimaryGeneratedColumn('uuid')
-  @Field(() => ID)
-  id: string;
+export class User extends CoreEntity {
+  @Column()
+  @Field()
+  @IsString()
+  @MinLength(3)
+  @MaxLength(100)
+  @IsNotEmpty()
+  name: string;
 
-  @CreateDateColumn()
-  @Field(() => GraphQLISODateTime)
-  created_at: Date;
+  @Column({ unique: true })
+  @Field()
+  @IsEmail()
+  @IsNotEmpty()
+  email: string;
 
-  @UpdateDateColumn()
-  @Field(() => GraphQLISODateTime)
-  updated_at: Date;
+  @Column({ select: false })
+  @Field()
+  @MinLength(6)
+  @IsString()
+  @IsNotEmpty()
+  password: string;
 }

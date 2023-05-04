@@ -26,6 +26,7 @@ import { UsersModule } from './modules/users/users.module';
       definitions: {
         path: join(process.cwd(), 'libs/types/src/graphql/index.ts'),
       },
+      sortSchema: true,
     }),
     UsersModule,
   ],

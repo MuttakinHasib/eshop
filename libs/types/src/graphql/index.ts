@@ -1,4 +1,3 @@
-
 /*
  * -------------------------------------------------------
  * THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
@@ -9,33 +8,38 @@
 /* eslint-disable */
 
 export interface CreateUserInput {
-    name: string;
-    email: string;
-    password: string;
+  email: string;
+  name: string;
+  password: string;
 }
 
 export interface UpdateUserInput {
-    id: number;
-}
-
-export interface User {
-    name: string;
-    email: string;
-    password: string;
-    id: string;
-    created_at: DateTime;
-    updated_at: DateTime;
-}
-
-export interface IQuery {
-    users(): User[] | Promise<User[]>;
-    user(id: number): User | Promise<User>;
+  created_at?: Nullable<DateTime>;
+  email?: Nullable<string>;
+  id?: Nullable<string>;
+  name?: Nullable<string>;
+  password?: Nullable<string>;
+  updated_at?: Nullable<DateTime>;
 }
 
 export interface IMutation {
-    createUser(createUserInput: CreateUserInput): string | Promise<string>;
-    updateUser(updateUserInput: UpdateUserInput): User | Promise<User>;
-    removeUser(id: number): User | Promise<User>;
+  createUser(createUserInput: CreateUserInput): string | Promise<string>;
+  removeUser(id: number): User | Promise<User>;
+  updateUser(updateUserInput: UpdateUserInput): User | Promise<User>;
+}
+
+export interface IQuery {
+  user(id: number): User | Promise<User>;
+  users(): User[] | Promise<User[]>;
+}
+
+export interface User {
+  created_at: DateTime;
+  email: string;
+  id: string;
+  name: string;
+  password: string;
+  updated_at: DateTime;
 }
 
 export type DateTime = any;
