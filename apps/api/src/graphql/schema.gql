@@ -71,6 +71,7 @@ input ProfileInputType {
 
 type Query {
   auth(id: Int!): Auth!
+  logout: String!
   profile(id: Int!): Profile!
   profiles: [Profile!]!
   user(id: Int!): UserWithoutPassword!

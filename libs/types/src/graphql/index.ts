@@ -114,6 +114,7 @@ export interface Profile {
 
 export interface IQuery {
     auth(id: number): Auth | Promise<Auth>;
+    logout(): string | Promise<string>;
     profile(id: number): Profile | Promise<Profile>;
     profiles(): Profile[] | Promise<Profile[]>;
     user(id: number): UserWithoutPassword | Promise<UserWithoutPassword>;

@@ -16,7 +16,6 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     email: string,
     password: string
   ): Promise<UserWithoutPassword> {
-    console.log(email, password);
     const user = await this.authService.validate(email, password);
     if (!user) throw new UnauthorizedException('Invalid credentials');
     return user;

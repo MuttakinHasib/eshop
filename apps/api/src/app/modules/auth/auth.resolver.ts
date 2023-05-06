@@ -8,8 +8,10 @@ import { Auth } from './entities/auth.entity';
 import { CurrentUser } from '@eshop/common';
 import { UserWithoutPassword } from '../users/entities/user.entity';
 import { UseGuards } from '@nestjs/common';
-import { LocalGqlAuthGuard } from './guards/local-gql.guard';
+import { LocalAuthGuard } from './guards/local.guard';
 import { SessionAuthGuard } from './guards/session.guard';
+import { AuthenticatedGuard } from './guards/authenticated.guard';
+import { Logout } from './guards/logout.guard';
 
 @Resolver(() => Auth)
 export class AuthResolver {
@@ -19,7 +21,7 @@ export class AuthResolver {
   ) {}
 
   @Mutation(() => LoginResponse)
-  @UseGuards(LocalGqlAuthGuard, SessionAuthGuard)
+  @UseGuards(LocalAuthGuard, SessionAuthGuard)
   async login(
     @CurrentUser() user: UserWithoutPassword,
     @Args('loginInput') _loginInput: LoginInput
@@ -29,9 +31,15 @@ export class AuthResolver {
   }
 
   @Query(() => UserWithoutPassword)
+  @UseGuards(AuthenticatedGuard)
   whoAmI(@CurrentUser() user: UserWithoutPassword) {
-    console.log(user);
     return user;
+  }
+
+  @UseGuards(Logout)
+  @Query(() => String, { name: 'logout' })
+  async logout() {
+    return 'Logout Success';
   }
 
   @Query(() => [Auth], { name: 'auth' })
