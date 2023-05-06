@@ -1,17 +1,23 @@
-import { ObjectType, Field } from '@nestjs/graphql';
-import { Column, Entity } from 'typeorm';
+import * as bcrypt from 'bcrypt';
+import { ObjectType, Field, OmitType, InputType } from '@nestjs/graphql';
+import { Column, Entity, OneToOne } from 'typeorm';
 import { CoreEntity } from '@eshop/common';
 import {
+  IsBoolean,
   IsEmail,
   IsNotEmpty,
   IsString,
   MaxLength,
   MinLength,
+  ValidateNested,
 } from 'class-validator';
-import { Profile } from './profile.entity';
+
+import { Type } from 'class-transformer';
+import { Profile } from '../../profiles/entities/profile.entity';
 
 @Entity()
 @ObjectType()
+@InputType('UserInputType', { isAbstract: true })
 export class User extends CoreEntity {
   @Column()
   @Field()
@@ -27,14 +33,36 @@ export class User extends CoreEntity {
   @IsNotEmpty()
   email: string;
 
-  @Column({ select: false })
+  @Column()
   @Field()
   @MinLength(6)
   @IsString()
   @IsNotEmpty()
   password: string;
 
-  @Column({ type: 'simple-json', nullable: true })
-  @Field(() => Profile, { nullable: true, name: 'profile' })
+  @Column({ default: false })
+  @Field(() => Boolean, { defaultValue: false })
+  @IsBoolean()
+  is_active: boolean;
+
+  @OneToOne(() => Profile, (profile) => profile.user, {
+    cascade: true,
+    nullable: true,
+  })
+  @Field(() => Profile, { nullable: true })
+  @ValidateNested({ each: true })
+  @Type(() => Profile)
   profile?: Profile;
+
+  @Column({ nullable: true })
+  @Field({ nullable: true })
+  profile_id?: string;
+
+  async comparePassword(password: string): Promise<boolean> {
+    const user = this as User;
+    return await bcrypt.compare(password, user.password);
+  }
 }
+
+@ObjectType()
+export class UserWithoutPassword extends OmitType(User, ['password']) {}

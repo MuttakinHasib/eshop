@@ -7,6 +7,9 @@ import { ConfigurationModule, ConfigurationService } from '@eshop/common';
 import { join } from 'path';
 import { ApolloDriver } from '@nestjs/apollo';
 import { UsersModule } from './modules/users/users.module';
+import { ProfilesModule } from './modules/profiles/profiles.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
@@ -29,6 +32,8 @@ import { UsersModule } from './modules/users/users.module';
       sortSchema: true,
     }),
     UsersModule,
+    ProfilesModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,4 +1,10 @@
-import { Field, GraphQLISODateTime, ID, ObjectType } from '@nestjs/graphql';
+import {
+  Field,
+  GraphQLISODateTime,
+  ID,
+  InputType,
+  ObjectType,
+} from '@nestjs/graphql';
 import {
   CreateDateColumn,
   PrimaryGeneratedColumn,
@@ -6,6 +12,7 @@ import {
 } from 'typeorm';
 
 @ObjectType()
+@InputType('CoreInputType', { isAbstract: true })
 export class CoreEntity {
   @PrimaryGeneratedColumn('uuid')
   @Field(() => ID)

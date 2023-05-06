@@ -3,9 +3,8 @@ import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
-import { Repository } from 'typeorm';
+import { FindOptionsWhere, Repository } from 'typeorm';
 import { createHash } from '../../utils/hash';
-import { omit } from 'lodash';
 
 @Injectable()
 export class UsersService {
@@ -29,12 +28,21 @@ export class UsersService {
     return await this.userRepository.find({});
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} user`;
+  async findOne(query: FindOptionsWhere<User>) {
+    return await this.userRepository.findOne({ where: query });
   }
 
-  update(id: string, updateUserInput: UpdateUserInput) {
-    return `This action updates a #${id} user`;
+  async update(id: string, updateUserInput: UpdateUserInput) {
+    // update user by id in typeorm posgres
+    const user = await this.userRepository.findOne({ where: { id } });
+    if (!user) throw new ConflictException('User not found');
+
+    const updatedUser = await this.userRepository.save({
+      id,
+      ...updateUserInput,
+    });
+
+    return updatedUser;
   }
 
   remove(id: string) {

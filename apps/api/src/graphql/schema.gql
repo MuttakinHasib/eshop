@@ -2,6 +2,18 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Auth {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input CreateOrUpdateProfileInput {
+  avatar: String
+  bio: String
+  contact: String
+  socials: [SocialInputType!]
+}
+
 input CreateUserInput {
   email: String!
   name: String!
@@ -13,51 +25,92 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type LoginResponse {
+  message: String!
+  user: UserWithoutPassword!
+}
+
 type Mutation {
-  createUser(createUserInput: CreateUserInput!): String!
-  removeUser(id: Int!): User!
-  updateUser(updateUserInput: UpdateUserInput!): User!
+  createOrUpdateProfile(createOrUpdateProfileInput: CreateOrUpdateProfileInput!): Profile!
+  createUser(createUserInput: CreateUserInput!): UserWithoutPassword!
+  login(loginInput: LoginInput!): LoginResponse!
+  removeAuth(id: Int!): Auth!
+  removeProfile(id: Int!): Profile!
+  removeUser(id: Int!): UserWithoutPassword!
+  updateAuth(updateAuthInput: UpdateAuthInput!): Auth!
+  updateProfile(updateProfileInput: UpdateProfileInput!): Profile!
+  updateUser(updateUserInput: UpdateUserInput!): UserWithoutPassword!
 }
 
 type Profile {
-  avatar: String!
+  avatar: String
   bio: String
   contact: String
   created_at: DateTime!
   id: ID!
   socials: [Social!]
   updated_at: DateTime!
+  user: User
 }
 
 input ProfileInputType {
-  avatar: String!
+  avatar: String
   bio: String
   contact: String
+  created_at: DateTime!
+  id: ID!
   socials: [SocialInputType!]
+  updated_at: DateTime!
+  user: UserInputType
 }
 
 type Query {
-  user(id: Int!): User!
-  users: [User!]!
+  auth(id: Int!): Auth!
+  profile(id: Int!): Profile!
+  profiles: [Profile!]!
+  user(id: Int!): UserWithoutPassword!
+  users: [UserWithoutPassword!]!
+  whoAmI: UserWithoutPassword!
 }
 
 type Social {
-  link: String!
-  type: String!
+  link: String
+  type: String
 }
 
 input SocialInputType {
-  link: String!
-  type: String!
+  link: String
+  type: String
+}
+
+input UpdateAuthInput {
+  email: String
+  id: Int!
+  password: String
+}
+
+input UpdateProfileInput {
+  avatar: String
+  bio: String
+  contact: String
+  id: Int!
+  socials: [SocialInputType!]
 }
 
 input UpdateUserInput {
   created_at: DateTime
   email: String
   id: ID
+  is_active: Boolean = false
   name: String
   password: String
   profile: ProfileInputType
+  profile_id: String
   updated_at: DateTime
 }
 
@@ -65,8 +118,33 @@ type User {
   created_at: DateTime!
   email: String!
   id: ID!
+  is_active: Boolean!
   name: String!
   password: String!
   profile: Profile
+  profile_id: String
+  updated_at: DateTime!
+}
+
+input UserInputType {
+  created_at: DateTime!
+  email: String!
+  id: ID!
+  is_active: Boolean! = false
+  name: String!
+  password: String!
+  profile: ProfileInputType
+  profile_id: String
+  updated_at: DateTime!
+}
+
+type UserWithoutPassword {
+  created_at: DateTime!
+  email: String!
+  id: ID!
+  is_active: Boolean!
+  name: String!
+  profile: Profile
+  profile_id: String
   updated_at: DateTime!
 }
