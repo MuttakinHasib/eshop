@@ -28,7 +28,7 @@ export class UsersService {
   }
 
   async findAll() {
-    return await this.userRepository.find({});
+    return await this.userRepository.find({ relations: ['profile'] });
   }
 
   async findOne(query: FindOptionsWhere<User>) {
