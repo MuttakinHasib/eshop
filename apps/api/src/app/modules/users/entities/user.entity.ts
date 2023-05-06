@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcrypt';
 import { ObjectType, Field, OmitType, InputType } from '@nestjs/graphql';
-import { Column, Entity, OneToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
 import { CoreEntity } from '@eshop/common';
 import {
   IsBoolean,
@@ -51,12 +51,9 @@ export class User extends CoreEntity {
   })
   @Field(() => Profile, { nullable: true })
   @ValidateNested({ each: true })
+  @JoinColumn({ name: 'profile_id' })
   @Type(() => Profile)
   profile?: Profile;
-
-  @Column({ nullable: true })
-  @Field({ nullable: true })
-  profile_id?: string;
 
   async comparePassword(password: string): Promise<boolean> {
     const user = this as User;

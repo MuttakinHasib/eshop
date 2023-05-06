@@ -17,7 +17,7 @@ import { User } from '../../users/entities/user.entity';
 export class Profile extends CoreEntity {
   @Column({ nullable: true })
   @Field({ nullable: true })
-  @IsString()
+  @IsUrl()
   @IsOptional()
   avatar?: string;
 
@@ -39,7 +39,7 @@ export class Profile extends CoreEntity {
   @Type(() => Social)
   socials?: Social[];
 
-  @OneToOne(() => User, (user) => user.profile)
+  @OneToOne(() => User, (user) => user.profile, { onDelete: 'CASCADE' })
   @Field(() => User, { nullable: true })
   user?: User;
 }

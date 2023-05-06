@@ -48,14 +48,6 @@ export interface UpdateAuthInput {
     password?: Nullable<string>;
 }
 
-export interface UpdateProfileInput {
-    avatar?: Nullable<string>;
-    bio?: Nullable<string>;
-    contact?: Nullable<string>;
-    id: number;
-    socials?: Nullable<SocialInputType[]>;
-}
-
 export interface UpdateUserInput {
     created_at?: Nullable<DateTime>;
     email?: Nullable<string>;
@@ -64,7 +56,6 @@ export interface UpdateUserInput {
     name?: Nullable<string>;
     password?: Nullable<string>;
     profile?: Nullable<ProfileInputType>;
-    profile_id?: Nullable<string>;
     updated_at?: Nullable<DateTime>;
 }
 
@@ -76,7 +67,6 @@ export interface UserInputType {
     name: string;
     password: string;
     profile?: Nullable<ProfileInputType>;
-    profile_id?: Nullable<string>;
     updated_at: DateTime;
 }
 
@@ -90,14 +80,13 @@ export interface LoginResponse {
 }
 
 export interface IMutation {
-    createOrUpdateProfile(createOrUpdateProfileInput: CreateOrUpdateProfileInput): Profile | Promise<Profile>;
+    createOrUpdateProfile(createOrUpdateProfileInput: CreateOrUpdateProfileInput): string | Promise<string>;
     createUser(createUserInput: CreateUserInput): UserWithoutPassword | Promise<UserWithoutPassword>;
     login(loginInput: LoginInput): LoginResponse | Promise<LoginResponse>;
     removeAuth(id: number): Auth | Promise<Auth>;
     removeProfile(id: number): Profile | Promise<Profile>;
     removeUser(id: number): UserWithoutPassword | Promise<UserWithoutPassword>;
     updateAuth(updateAuthInput: UpdateAuthInput): Auth | Promise<Auth>;
-    updateProfile(updateProfileInput: UpdateProfileInput): Profile | Promise<Profile>;
     updateUser(updateUserInput: UpdateUserInput): UserWithoutPassword | Promise<UserWithoutPassword>;
 }
 
@@ -135,7 +124,6 @@ export interface User {
     name: string;
     password: string;
     profile?: Nullable<Profile>;
-    profile_id?: Nullable<string>;
     updated_at: DateTime;
 }
 
@@ -146,7 +134,6 @@ export interface UserWithoutPassword {
     is_active: boolean;
     name: string;
     profile?: Nullable<Profile>;
-    profile_id?: Nullable<string>;
     updated_at: DateTime;
 }
 

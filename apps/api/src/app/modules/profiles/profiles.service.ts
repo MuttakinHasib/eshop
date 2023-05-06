@@ -25,7 +25,8 @@ export class ProfilesService {
     return `This action returns a #${id} profile`;
   }
 
-  update(id: number, updateProfileInput: UpdateProfileInput) {
+  async update(id: string, updateProfileInput: UpdateProfileInput) {
+    await this.profileRepository.save({ id, ...updateProfileInput });
     return `This action updates a #${id} profile`;
   }
 

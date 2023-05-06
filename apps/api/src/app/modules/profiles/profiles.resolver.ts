@@ -8,14 +8,6 @@ import { UpdateProfileInput } from './dto/update-profile.input';
 export class ProfilesResolver {
   constructor(private readonly profilesService: ProfilesService) {}
 
-  @Mutation(() => Profile)
-  async createOrUpdateProfile(
-    @Args('createOrUpdateProfileInput')
-    createOrUpdateProfileInput: CreateOrUpdateProfileInput
-  ) {
-    return await this.profilesService.create(createOrUpdateProfileInput);
-  }
-
   @Query(() => [Profile], { name: 'profiles' })
   findAll() {
     return this.profilesService.findAll();
@@ -24,16 +16,6 @@ export class ProfilesResolver {
   @Query(() => Profile, { name: 'profile' })
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.profilesService.findOne(id);
-  }
-
-  @Mutation(() => Profile)
-  updateProfile(
-    @Args('updateProfileInput') updateProfileInput: UpdateProfileInput
-  ) {
-    return this.profilesService.update(
-      updateProfileInput.id,
-      updateProfileInput
-    );
   }
 
   @Mutation(() => Profile)

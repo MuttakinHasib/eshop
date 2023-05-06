@@ -5,11 +5,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { FindOptionsWhere, Repository } from 'typeorm';
 import { createHash } from '../../utils/hash';
+import { CreateOrUpdateProfileInput } from '../profiles/dto/create-profile.input';
+import { ProfilesService } from '../profiles/profiles.service';
 
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(User) private readonly userRepository: Repository<User>
+    @InjectRepository(User) private readonly userRepository: Repository<User>,
+    private readonly profilesService: ProfilesService
   ) {}
 
   async create(createUserInput: CreateUserInput) {
@@ -29,7 +32,10 @@ export class UsersService {
   }
 
   async findOne(query: FindOptionsWhere<User>) {
-    return await this.userRepository.findOne({ where: query });
+    return await this.userRepository.findOne({
+      where: query,
+      relations: ['profile'],
+    });
   }
 
   async update(id: string, updateUserInput: UpdateUserInput) {
@@ -43,6 +49,26 @@ export class UsersService {
     });
 
     return updatedUser;
+  }
+
+  async createOrUpdateProfile(
+    userId: string,
+    createOrUpdateProfileInput: CreateOrUpdateProfileInput
+  ) {
+    const user = await this.findOne({ id: userId });
+
+    if (user?.profile?.id) {
+      await this.profilesService.update(user.profile.id, {
+        ...createOrUpdateProfileInput,
+      });
+      return 'Profile updated';
+    }
+
+    const profile = await this.profilesService.create(
+      createOrUpdateProfileInput
+    );
+    await this.update(userId, { profile });
+    return 'Profile updated';
   }
 
   remove(id: string) {

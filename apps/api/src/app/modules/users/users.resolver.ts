@@ -4,14 +4,14 @@ import { User, UserWithoutPassword } from './entities/user.entity';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { CreateOrUpdateProfileInput } from '../profiles/dto/create-profile.input';
-import { ProfilesService } from '../profiles/profiles.service';
+
+import { CurrentUser } from '@eshop/common';
+import { UseGuards } from '@nestjs/common';
+import { AuthenticatedGuard } from '../auth/guards/authenticated.guard';
 
 @Resolver(() => User)
 export class UsersResolver {
-  constructor(
-    private readonly usersService: UsersService,
-    private readonly profilesService: ProfilesService
-  ) {}
+  constructor(private readonly usersService: UsersService) {}
 
   @Mutation(() => UserWithoutPassword)
   async createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
@@ -38,11 +38,16 @@ export class UsersResolver {
     return this.usersService.remove(id);
   }
 
-  @Mutation(() => UserWithoutPassword)
+  @Mutation(() => String)
+  @UseGuards(AuthenticatedGuard)
   async createOrUpdateProfile(
+    @CurrentUser() user: UserWithoutPassword,
     @Args('createOrUpdateProfileInput')
     createOrUpdateProfileInput: CreateOrUpdateProfileInput
   ) {
-    const profile = this.profilesService.create(createOrUpdateProfileInput);
+    return this.usersService.createOrUpdateProfile(
+      user.id,
+      createOrUpdateProfileInput
+    );
   }
 }

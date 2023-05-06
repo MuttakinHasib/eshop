@@ -36,14 +36,13 @@ type LoginResponse {
 }
 
 type Mutation {
-  createOrUpdateProfile(createOrUpdateProfileInput: CreateOrUpdateProfileInput!): Profile!
+  createOrUpdateProfile(createOrUpdateProfileInput: CreateOrUpdateProfileInput!): String!
   createUser(createUserInput: CreateUserInput!): UserWithoutPassword!
   login(loginInput: LoginInput!): LoginResponse!
   removeAuth(id: Int!): Auth!
   removeProfile(id: Int!): Profile!
   removeUser(id: Int!): UserWithoutPassword!
   updateAuth(updateAuthInput: UpdateAuthInput!): Auth!
-  updateProfile(updateProfileInput: UpdateProfileInput!): Profile!
   updateUser(updateUserInput: UpdateUserInput!): UserWithoutPassword!
 }
 
@@ -95,14 +94,6 @@ input UpdateAuthInput {
   password: String
 }
 
-input UpdateProfileInput {
-  avatar: String
-  bio: String
-  contact: String
-  id: Int!
-  socials: [SocialInputType!]
-}
-
 input UpdateUserInput {
   created_at: DateTime
   email: String
@@ -111,7 +102,6 @@ input UpdateUserInput {
   name: String
   password: String
   profile: ProfileInputType
-  profile_id: String
   updated_at: DateTime
 }
 
@@ -123,7 +113,6 @@ type User {
   name: String!
   password: String!
   profile: Profile
-  profile_id: String
   updated_at: DateTime!
 }
 
@@ -135,7 +124,6 @@ input UserInputType {
   name: String!
   password: String!
   profile: ProfileInputType
-  profile_id: String
   updated_at: DateTime!
 }
 
@@ -146,6 +134,5 @@ type UserWithoutPassword {
   is_active: Boolean!
   name: String!
   profile: Profile
-  profile_id: String
   updated_at: DateTime!
 }
