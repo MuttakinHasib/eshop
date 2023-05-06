@@ -84,7 +84,6 @@ export interface IMutation {
     createUser(createUserInput: CreateUserInput): UserWithoutPassword | Promise<UserWithoutPassword>;
     login(loginInput: LoginInput): LoginResponse | Promise<LoginResponse>;
     removeAuth(id: number): Auth | Promise<Auth>;
-    removeProfile(id: number): Profile | Promise<Profile>;
     removeUser(id: number): UserWithoutPassword | Promise<UserWithoutPassword>;
     updateAuth(updateAuthInput: UpdateAuthInput): Auth | Promise<Auth>;
     updateUser(updateUserInput: UpdateUserInput): UserWithoutPassword | Promise<UserWithoutPassword>;
@@ -104,8 +103,6 @@ export interface Profile {
 export interface IQuery {
     auth(id: number): Auth | Promise<Auth>;
     logout(): string | Promise<string>;
-    profile(id: number): Profile | Promise<Profile>;
-    profiles(): Profile[] | Promise<Profile[]>;
     user(id: number): UserWithoutPassword | Promise<UserWithoutPassword>;
     users(): UserWithoutPassword[] | Promise<UserWithoutPassword[]>;
     whoAmI(): UserWithoutPassword | Promise<UserWithoutPassword>;

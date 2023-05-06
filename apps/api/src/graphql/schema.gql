@@ -40,7 +40,6 @@ type Mutation {
   createUser(createUserInput: CreateUserInput!): UserWithoutPassword!
   login(loginInput: LoginInput!): LoginResponse!
   removeAuth(id: Int!): Auth!
-  removeProfile(id: Int!): Profile!
   removeUser(id: Int!): UserWithoutPassword!
   updateAuth(updateAuthInput: UpdateAuthInput!): Auth!
   updateUser(updateUserInput: UpdateUserInput!): UserWithoutPassword!
@@ -71,8 +70,6 @@ input ProfileInputType {
 type Query {
   auth(id: Int!): Auth!
   logout: String!
-  profile(id: Int!): Profile!
-  profiles: [Profile!]!
   user(id: Int!): UserWithoutPassword!
   users: [UserWithoutPassword!]!
   whoAmI: UserWithoutPassword!

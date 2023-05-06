@@ -17,20 +17,8 @@ export class ProfilesService {
     return await this.profileRepository.save(profile);
   }
 
-  findAll() {
-    return `This action returns all profiles`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} profile`;
-  }
-
   async update(id: string, updateProfileInput: UpdateProfileInput) {
     await this.profileRepository.save({ id, ...updateProfileInput });
     return `This action updates a #${id} profile`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} profile`;
   }
 }
