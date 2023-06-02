@@ -17,7 +17,7 @@ import { PassportModule } from '@nestjs/passport';
     TypeOrmModule.forRootAsync({
       useFactory: async (configurationService: ConfigurationService) => ({
         type: 'postgres',
-        url: configurationService.POSTGRES_DB_URL,
+        url: configurationService.DATABASE_URL,
         autoLoadEntities: true,
         synchronize: true,
       }),

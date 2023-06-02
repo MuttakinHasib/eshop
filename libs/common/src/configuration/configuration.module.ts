@@ -10,7 +10,7 @@ import * as Joi from 'joi';
       isGlobal: true,
       envFilePath: '.env',
       validationSchema: Joi.object({
-        POSTGRES_DB_URL: Joi.string().required(),
+        DATABASE_URL: Joi.string().required(),
       }),
     }),
   ],
