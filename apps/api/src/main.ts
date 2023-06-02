@@ -23,7 +23,7 @@ async function bootstrap() {
         secure: false,
       },
       store: new pgSession({
-        conString: process.env.POSTGRES_DB_URL,
+        conString: process.env.DATABASE_URL,
         createTableIfMissing: true,
       }),
     })
